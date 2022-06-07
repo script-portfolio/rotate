@@ -12,7 +12,7 @@ function rotate () {
     [ -e "${FILE}" ] && ROTATE_FLAG=1
 
     [ -n "${ROTATE_FLAG}" ] && {
-      find "${DATA_DIR}" -maxdepth 1 -name ${BODY}\.\* \( -type d -or -type f \) -printf '%f\n' | sort -t '.' -k1 -nr | while read CF; do
+      find "${DATA_DIR}" -maxdepth 1 -regex "${DATA_DIR}/${BODY}\.[0-9]+" \( -type d -or -type f \) -printf '%f\n' | sort -t '.' -k1 -nr | while read CF; do
         NUM=${CF##*\.}
         #NUM=$(echo ${NUM}|sed -e 's/^0*//g')
         #echo "Found: $CF NUM: $NUM" >&2
@@ -31,9 +31,9 @@ function rotate () {
 }
 
 
-[ -z "${1:-}" ]  && {
-	echo 'Need to specify file/directory'
-	exit 1
-}
+#[ -z "${1:-}" ]  && {
+#	echo 'Need to specify file/directory'
+#	exit 1
+#}
 
-rotate "$1"
+#rotate "$1"
